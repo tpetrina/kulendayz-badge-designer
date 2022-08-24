@@ -1,0 +1,25 @@
+.ghost-input {
+  background: transparent;
+  outline: none;
+  border: none;
+  color: black;
+}
+
+.ghost-input:hover,
+.ghost-input:focus {
+  border-bottom: 1px solid black;
+}
+
+select {
+  background-color: #fafafa;
+  border-radius: 4px;
+  padding: 2px 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
