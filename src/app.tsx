@@ -7,12 +7,13 @@ import avatar from "./toni.png";
 
 import { data } from "./data";
 data.sort((l, r) => l.title.localeCompare(r.title));
-const info = data.find((x) => x.id === 407)!;
+const first = data.find((x) => x.id === 407)!;
 
 export function App() {
-  const [title, setTitle] = useState(info.title);
-  const [name, setName] = useState(info.speakers[0].name);
-  const [labels, setLabels] = useState(info.labels);
+  const [title, setTitle] = useState(first?.title);
+  const [name, setName] = useState(first.speakers[0].name);
+  const [labels, setLabels] = useState(first.labels);
+  const [info, setInfo] = useState(first);
 
   const [selected, setSelected] = useState(407);
 
@@ -20,10 +21,15 @@ export function App() {
 
   function select(id: number) {
     setSelected(id);
-    const info = data.find((x) => x.id === id);
-    setTitle(info?.title);
-    setName(info?.speakers[0].name);
-    setLabels(info?.labels);
+    const session = data.find((x) => x.id === id);
+    if (!session) {
+      return;
+    }
+    ``
+    setInfo(session);
+    setTitle(session?.title ?? "");
+    setName(session?.speakers[0].name ?? "");
+    setLabels(session?.labels ?? []);
   }
 
   function render() {
@@ -64,7 +70,7 @@ export function App() {
         <select
           style={{ margin: "0 1em" }}
           value={selected}
-          onChange={(e) => select(+e.target!.value)}
+          onInput={(e) => select(+(e.target as any).value)}
         >
           {data.map((session) => (
             <option key={session.id} value={session.id}>
@@ -172,8 +178,8 @@ export function App() {
               width: "15em",
               boxShadow: "1px 1px 10px #ccc",
             }}
-            src={avatar}
-            // src={`https://api.run.events/api/assets/external-logo?imageId=${info.speakers[0].image}&assetType=SpeakerProfileImage`}
+            // src={avatar}
+            src={`https://api.run.events/api/assets/external-logo?imageId=${info.speakers[0].image}&assetType=SpeakerProfileImage`}
             alt=""
           />
         </section>
